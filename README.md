@@ -1,7 +1,5 @@
-# Yolo Bucket
-Yolo Bucket is the place to keep track of all the things you've always wanted to do. You only live once after all!
+# Titanium Travel
 
-Once you've signed up and signed in, you can create a Yolo Bucket list item. If you've always wanted to go skydiving you can create this adventure, give a description and submit! Once you've completed this you can mark it complete!
 
 - [Titanium Travel Deployed Website]()
 - [Titanium Travel Client Repo]()
