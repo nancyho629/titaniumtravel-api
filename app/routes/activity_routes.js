@@ -9,8 +9,9 @@ const requireToken = passport.authenticate('bearer', { session: false })
 const router = express.Router()
 
 // INDEX
-router.get('/activity', requireToken, (req, res, next) => {
-  Activity.find({ activity: req.activity.id })
+router.get('/activities', requireToken, (req, res, next) => {
+  Activity.find()
+    .populate('trip')
     .then(activities => {
       activities.map(activity => activity.toObject())
       return activities.reverse()
@@ -33,13 +34,12 @@ router.post('/activities', requireToken, (req, res, next) => {
 // PATCH
 router.patch('/activities/:id', requireToken, removeBlanks, (req, res, next) => {
   delete req.body.activity.owner
-  delete req.body.activity.trip
 
   Activity.findById(req.params.id)
     .then(handle404)
     .then(activity => {
       requireOwnership(req, activity)
-      return activity.updateOne(req.body.activity)
+      return activity.update(req.body.activity)
     })
     .then(() => res.sendStatus(204))
     .catch(next)
@@ -48,10 +48,8 @@ router.patch('/activities/:id', requireToken, removeBlanks, (req, res, next) => 
 // SHOW
 router.get('/activities/:id', requireToken, (req, res, next) => {
   Activity.findById(req.params.id)
+    .populate('trip')
     .then(handle404)
-    .then(activity => {
-      requireOwnership(req, activity)
-    })
     .then(activity => res.status(200).json({ activity: activity.toObject() }))
     .catch(next)
 })
@@ -67,3 +65,5 @@ router.delete('/activities/:id', requireToken, (req, res, next) => {
     .then(() => res.sendStatus(204))
     .catch(next)
 })
+
+module.exports = router

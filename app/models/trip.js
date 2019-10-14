@@ -11,6 +11,10 @@ const tripSchema = new mongoose.Schema({
   completed: {
     type: Boolean
   },
+  activities: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Activity'
+  }],
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

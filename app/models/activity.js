@@ -8,6 +8,9 @@ const activitySchema = new mongoose.Schema({
   description: {
     type: String
   },
+  time: {
+    type: String
+  },
   trip: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Trip',
