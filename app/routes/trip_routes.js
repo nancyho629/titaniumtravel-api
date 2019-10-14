@@ -7,12 +7,12 @@ const requireOwnership = customErrors.requireOwnership
 const removeBlanks = require('../../lib/remove_blank_fields')
 const requireToken = passport.authenticate('bearer', { session: false })
 const router = express.Router()
-const Activity = require('../models/activity')
+// const Activity = require('../models/activity')
 
 // INDEX
 router.get('/trips', requireToken, (req, res, next) => {
   Trip.find()
-    // .populate('activities')
+    .populate('activities')
     .then(trips => {
       trips.map(trip => trip.toObject())
       return trips.reverse()
