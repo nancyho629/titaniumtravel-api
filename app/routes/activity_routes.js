@@ -7,6 +7,7 @@ const requireOwnership = customErrors.requireOwnership
 const removeBlanks = require('../../lib/remove_blank_fields')
 const requireToken = passport.authenticate('bearer', { session: false })
 const router = express.Router()
+const Trip = require('../models/trip')
 
 // INDEX
 router.get('/activities', requireToken, (req, res, next) => {
@@ -26,7 +27,18 @@ router.post('/activities', requireToken, (req, res, next) => {
 
   Activity.create(req.body.activity)
     .then(activity => {
-      res.status(201).json({ activity: activity.toObject() })
+      Trip.findById(activity.trip)
+        .then(handle404)
+        .then(trip => {
+          // Then push this new made activity to the array of activities in the trip
+          trip.activities.push(activity._id)
+          // Update the trip so the new activity stays in the array
+          return trip.updateOne(trip)
+        })
+        .then(() => {
+          res.status(201).json({ activity: activity.toObject() })
+        })
+        .catch(next)
     })
     .catch(next)
 })
