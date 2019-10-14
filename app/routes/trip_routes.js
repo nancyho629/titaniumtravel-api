@@ -11,7 +11,8 @@ const Activity = require('../models/activity')
 
 // INDEX
 router.get('/trips', requireToken, (req, res, next) => {
-  Trip.find({ owner: req.user.id })
+  Trip.find()
+    // .populate('activities')
     .then(trips => {
       trips.map(trip => trip.toObject())
       return trips.reverse()
@@ -22,7 +23,7 @@ router.get('/trips', requireToken, (req, res, next) => {
 
 // CREATE
 router.post('/trips', requireToken, (req, res, next) => {
-  req.body.item.owner = req.user.id
+  req.body.trip.owner = req.user.id
 
   Trip.create(req.body.trip)
     .then(trip => {
@@ -47,11 +48,12 @@ router.patch('/trips/:id', requireToken, removeBlanks, (req, res, next) => {
 
 // SHOW
 router.get('/trips/:id', requireToken, (req, res, next) => {
-  Trip.findbyId(req.params.id)
+  Trip.findById(req.params.id)
+    .populate('activities')
     .then(handle404)
-    .then(trip => {
-      requireOwnership(req, trip)
-    })
+    // .then(trip => {
+    //   requireOwnership(req, trip)
+    // })
     .then(trip => res.status(200).json({ trip: trip.toObject() }))
     .catch(next)
 })
@@ -66,7 +68,7 @@ router.delete('/trips/:id', requireToken, (req, res, next) => {
       Activity.deleteMany({ trip: id }, (err, res) => {
         if (err) throw err
       })
-      Trip.remove()
+      Trip.deleteOne()
     })
     .then(() => res.sendStatus(204))
     .catch(next)
