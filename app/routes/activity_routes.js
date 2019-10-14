@@ -26,7 +26,7 @@ router.post('/activities', requireToken, (req, res, next) => {
 
   Activity.create(req.body.activity)
     .then(activity => {
-      res.status(201).json({ activity: activity.toOBject() })
+      res.status(201).json({ activity: activity.toObject() })
     })
     .catch(next)
 })
