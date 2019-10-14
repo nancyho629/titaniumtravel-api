@@ -64,11 +64,11 @@ router.delete('/trips/:id', requireToken, (req, res, next) => {
     .then(handle404)
     .then(trip => {
       requireOwnership(req, trip)
-      const id = trip
-      Activity.deleteMany({ trip: id }, (err, res) => {
-        if (err) throw err
-      })
-      Trip.deleteOne()
+      // const id = trip
+      // Activity.deleteMany({ trip: id }, (err, res) => {
+      //   if (err) throw err
+      // })
+      trip.deleteOne()
     })
     .then(() => res.sendStatus(204))
     .catch(next)
