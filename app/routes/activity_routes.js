@@ -10,7 +10,7 @@ const router = express.Router()
 const Trip = require('../models/trip')
 
 // INDEX
-router.get('/activities', requireToken, (req, res, next) => {
+router.get('trips/:id/activities', requireToken, (req, res, next) => {
   Activity.find()
     .populate('trip')
     .then(activities => {
@@ -22,12 +22,12 @@ router.get('/activities', requireToken, (req, res, next) => {
 })
 
 // CREATE
-router.post('/activities', requireToken, (req, res, next) => {
+router.post('/trips/:id/activities', requireToken, (req, res, next) => {
   req.body.activity.owner = req.user.id
 
   Activity.create(req.body.activity)
     .then(activity => {
-      Trip.findById(activity.trip)
+      Trip.findById(req.params.id)
         .then(handle404)
         .then(trip => {
           // Then push this new made activity to the array of activities in the trip
@@ -44,7 +44,7 @@ router.post('/activities', requireToken, (req, res, next) => {
 })
 
 // PATCH
-router.patch('/activities/:id', requireToken, removeBlanks, (req, res, next) => {
+router.patch('trips/:id/activities/:id', requireToken, removeBlanks, (req, res, next) => {
   delete req.body.activity.owner
 
   Activity.findById(req.params.id)
@@ -58,7 +58,7 @@ router.patch('/activities/:id', requireToken, removeBlanks, (req, res, next) => 
 })
 
 // SHOW
-router.get('/activities/:id', requireToken, (req, res, next) => {
+router.get('trips/:id/activities/:id', requireToken, (req, res, next) => {
   Activity.findById(req.params.id)
     .populate('trip')
     .then(handle404)
@@ -67,7 +67,7 @@ router.get('/activities/:id', requireToken, (req, res, next) => {
 })
 
 // DELETE
-router.delete('/activities/:id', requireToken, (req, res, next) => {
+router.delete('trips/:id/activities/:id', requireToken, (req, res, next) => {
   Activity.findById(req.params.id)
     .then(handle404)
     .then(activity => {
