@@ -11,11 +11,6 @@ const activitySchema = new mongoose.Schema({
   time: {
     type: String
   },
-  trip: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Trip',
-    required: true
-  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
