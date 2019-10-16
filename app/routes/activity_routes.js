@@ -10,9 +10,8 @@ const router = express.Router()
 const Trip = require('../models/trip')
 
 // INDEX
-router.get('trips/:id/activities', requireToken, (req, res, next) => {
+router.get('/trips/:id/activities', requireToken, (req, res, next) => {
   Activity.find()
-    .populate('trip')
     .then(activities => {
       activities.map(activity => activity.toObject())
       return activities.reverse()
@@ -44,10 +43,10 @@ router.post('/trips/:id/activities', requireToken, (req, res, next) => {
 })
 
 // PATCH
-router.patch('trips/:id/activities/:id', requireToken, removeBlanks, (req, res, next) => {
+router.patch('/trips/:id/activities/:aid', requireToken, removeBlanks, (req, res, next) => {
   delete req.body.activity.owner
-
-  Activity.findById(req.params.id)
+  console.log('backend params', req.params)
+  Activity.findById(req.params.aid)
     .then(handle404)
     .then(activity => {
       requireOwnership(req, activity)
@@ -58,17 +57,16 @@ router.patch('trips/:id/activities/:id', requireToken, removeBlanks, (req, res, 
 })
 
 // SHOW
-router.get('trips/:id/activities/:id', requireToken, (req, res, next) => {
-  Activity.findById(req.params.id)
-    .populate('trip')
+router.get('/trips/:id/activities/:aid', requireToken, (req, res, next) => {
+  Activity.findById(req.params.aid)
     .then(handle404)
     .then(activity => res.status(200).json({ activity: activity.toObject() }))
     .catch(next)
 })
 
 // DELETE
-router.delete('trips/:id/activities/:id', requireToken, (req, res, next) => {
-  Activity.findById(req.params.id)
+router.delete('/trips/:id/activities/:aid', requireToken, (req, res, next) => {
+  Activity.findById(req.params.aid)
     .then(handle404)
     .then(activity => {
       requireOwnership(req, activity)
