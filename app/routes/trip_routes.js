@@ -11,7 +11,7 @@ const router = express.Router()
 
 // INDEX
 router.get('/trips', requireToken, (req, res, next) => {
-  Trip.find()
+  Trip.find({ owner: req.user.id })
     .populate('activities')
     .then(trips => {
       trips.map(trip => trip.toObject())
