@@ -10,8 +10,8 @@ Titanium Travel is a travel planning tool that allows users to create trips and 
 * React
 * Mongoose
 * MongoDB
-* Express API
-* Node.js
+* Express
+* Node
 * JavaScript
 
 ## Future Features
@@ -25,19 +25,19 @@ I started with the idea of a travel planning web app for an upcoming trip. Howev
 ![Titanium Travel ERD](./images/ERD.png)
 
 ## Routes
-|  Verb |  Route | Controller#Action |
-|-------|--------|--------|
-| POST   | `/sign-up`  |  |
-| POST   | `/sign-in`  |  |
-| DELETE  | `/sign-out`  |  |
-| PATCH   | `/change-password`  |   |
-| GET   | `/trips`  |   |
-| POST   | `/trips`  |   |
-| GET   | `/trips/:id`  |  |
-| PATCH  | `/trips/:id`  |  |
-| DELETE  | `/trips/:id` |   |
-| POST  |  `/trips/:id/activities` |   |
-| PATCH  | `/trips/:id/activities/:aid`  |   |   |
-| GET  | `/trips/:id/activities/:aid`  |   |   |
-| GET   | `/trips/:id/activities/:aid`  |   |   |
-| DELETE   | `/trips/:id/activities/:aid`  |   |   |
+|  Verb |  Route |
+|-------|--------|
+| POST   | `/sign-up`  |
+| POST   | `/sign-in`  |
+| DELETE  | `/sign-out`  |
+| PATCH   | `/change-password`  |
+| GET   | `/trips`  |
+| POST   | `/trips`  |
+| GET   | `/trips/:id`  |
+| PATCH  | `/trips/:id`  |
+| DELETE  | `/trips/:id` |
+| POST  |  `/trips/:id/activities` |
+| PATCH  | `/trips/:id/activities/:aid` |
+| GET  | `/trips/:id/activities/:aid`  |
+| GET   | `/trips/:id/activities/:aid`  |
+| DELETE   | `/trips/:id/activities/:aid`  |
