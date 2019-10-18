@@ -45,7 +45,6 @@ router.post('/trips/:id/activities', requireToken, (req, res, next) => {
 // PATCH
 router.patch('/trips/:id/activities/:aid', requireToken, removeBlanks, (req, res, next) => {
   delete req.body.activity.owner
-  console.log('backend params', req.params)
   Activity.findById(req.params.aid)
     .then(handle404)
     .then(activity => {
